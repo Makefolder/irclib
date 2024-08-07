@@ -11,7 +11,7 @@
 
 <div align="center">
   The IRC library... So you don't have to waste yo' time on it...
-  <br />Feel free to contribute! ;D
+  Check on the example <br />in order to get to know how to use this library ;D
 </div>
 
 ## 🛠️ Functionality
@@ -22,6 +22,8 @@
 * Handle PING-PONG
 
 ## 🔗 Linker flags
+
+Put folders from the release archive into your project and specify linker flags:
 
 ```bash
 -Llib -Iinclude -lirclib
@@ -35,7 +37,7 @@
 const char* convert_host(const char *host);
 int establish_conn(const char *address, const int port);
 int authenticate(int sockfd, const char *nickname, bool show_msg);
-int pong(int sockfd);
+int pong(int sockfd, char *buff);
 ```
 
 set `bool show_msg` to true in order to see the commands library sends during authentication.
