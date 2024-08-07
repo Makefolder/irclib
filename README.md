@@ -16,9 +16,23 @@
 
 ## 🛠️ Functionality
 
+* Find address by hostname.
 * Connect to a server.
-* Authentication (set nickname/username/description)
+* Authentication (set nickname as username and description).
 * Handle PING-PONG
+
+## 🔩 Header file
+
+```C
+#include <stdbool.h>
+
+const char* convert_host(const char *host);
+int establish_conn(const char *address, const int port);
+int authenticate(int sockfd, const char *nickname, bool show_msg);
+int pong(int sockfd);
+```
+
+set `bool show_msg` to true in order to see the commands library sends during authentication.
 
 ## 🏗️ Build from source
 
