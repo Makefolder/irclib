@@ -2,8 +2,7 @@
 /source/lib/*
 /source/include/irclib/*
 
-/example/tmp/bin/*
-/example/tmp/test/*
+/example/tmp/*
 /example/lib/*
 /example/include/irclib/*
 
