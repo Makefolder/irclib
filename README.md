@@ -21,6 +21,12 @@
 * Authentication (set nickname as username and description).
 * Handle PING-PONG
 
+## 🔗 Linker flags
+
+```bash
+-Llib -Iinclude -lirclib
+```
+
 ## 🔩 Header file
 
 ```C

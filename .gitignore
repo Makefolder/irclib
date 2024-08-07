@@ -1,6 +1,10 @@
-/lib/*
-/obj/*
-/tmp/bin/*
-/tmp/test/*
-/include/irclib/*
+/source/obj/*
+/source/lib/*
+/source/include/irclib/*
+
+/example/tmp/bin/*
+/example/tmp/test/*
+/example/lib/*
+/example/include/irclib/*
+
 !.keep

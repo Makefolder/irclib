@@ -8,9 +8,9 @@
 #include <stdio.h>
 #include <netdb.h>
 
-
 #define CMD_BUFSIZE 512
 
+// convert host to IPv4 address
 const char* convert_host(const char *host)
 {
     struct addrinfo filter;
@@ -36,6 +36,7 @@ const char* convert_host(const char *host)
     return address;
 }
 
+// connect to the server
 int establish_conn(const char *address, const int port)
 {
     if (address == NULL)
@@ -62,8 +63,8 @@ int establish_conn(const char *address, const int port)
     return sockfd;
 }
 
-// NICK aegislash525
-// USER aegislash525 0 * :aegislash525
+// set `NICK yournickname`
+// set `USER yournickname 0 * :yournickname`
 int authenticate(int sockfd, const char *nickname, bool show_msg)
 {
     if (nickname == NULL)
@@ -110,15 +111,18 @@ int authenticate(int sockfd, const char *nickname, bool show_msg)
         char *command = commands[i];
         send(sockfd, command, strlen(command), 0);
         if (show_msg)
-            printf("client > %s\n", command);
+            printf("client > %s", command);
         free(command);
     }
     free(commands);
     return 0;
 }
 
-int pong(int sockfd)
+int pong(int sockfd, char *buff)
 {
-    send(sockfd, "pong\r\n", sizeof(char) * 4, 0);
+    char pong[CMD_BUFSIZE] = "PONG ";
+    strncpy(pong + 5, buff + 5, sizeof(pong) - 5);
+    printf("irclib: %s\n", pong);
+    write(sockfd, pong, sizeof(pong) - 1);
     return 0;
 }

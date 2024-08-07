@@ -19,12 +19,12 @@
 int main(void)
 {
     const char *serv_addr = convert_host(HOST);
-    if (serv_addr != NULL)
-        printf("FOUND:\n\t%s\n", serv_addr);
-    else
-        printf("NOT FOUND ANY!\n");
-
-    const char *nickname = NICKNAME;
+    if (serv_addr == NULL)
+    {
+        puts("ADDRESS NOT FOUND");
+        return EXIT_FAILURE;
+    }
+    // connect to the server
     int sockfd = establish_conn(serv_addr, PORT);
 
     printf("\n");
@@ -32,7 +32,7 @@ int main(void)
     recv(sockfd, buff, sizeof(buff) - 1, 0);
     printf("%s\n", buff);
 
-    authenticate(sockfd, nickname, true);
+    authenticate(sockfd, NICKNAME, true);
     struct pollfd fd[2] = {
         {
             0,
@@ -46,27 +46,24 @@ int main(void)
         }
     };
 
+    // main loop
     while (true)
     {
         char buff[BUFF_CAPACITY] = { 0 };
         poll(fd, 2, 0);
+        // input from server
         if (fd[1].revents & POLLIN)
         {
             recv(sockfd, buff, sizeof(buff) - 1, 0);
             printf("%s\n", buff);
+
+            if (strncmp(buff, "PING ", 5) == 0)
+                pong(sockfd, buff);
         }
-        if (strncmp(buff, "PING ", 5) == 0)
-        {
-            char pong[BUFF_CAPACITY] = "PONG ";
-            strncpy(pong + 5, buff + 5, sizeof(pong) - 5);
-            printf("irclib: %s\n", pong);
-            write(sockfd, pong, sizeof(pong) - 1);
-        }
+        // input from client
         if (fd[0].revents & POLLIN)
         {
             char send_buff[BUFF_CAPACITY] = { 0 };
-
-            // stdin = 0
             read(0, send_buff, sizeof(send_buff) - 1);
             strncpy(send_buff + strlen(send_buff), "\r\n",
                 (sizeof(send_buff) - 1) - strlen(send_buff));
