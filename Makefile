@@ -3,7 +3,7 @@ AR=ar
 RANLIB=ranlib
 
 DEBUG=-fsanitize=address
-CFLAGS=-g -Wall -Werror -Wextra -O2 -pedantic -std=c99
+CFLAGS=-g -Wall -Werror -Wextra -O0 -pedantic -std=c99
 LDFLAGS=-Llib -Iinclude -lirclib
 
 LIBNAME=libirclib.a

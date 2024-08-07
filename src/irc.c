@@ -1,13 +1,40 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdbool.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <netdb.h>
+
 
 #define CMD_BUFSIZE 512
+
+const char* convert_host(const char *host)
+{
+    struct addrinfo filter;
+    struct addrinfo *result;
+
+    memset(&filter, 0, sizeof(filter));
+    filter.ai_family = AF_INET;
+    filter.ai_socktype = SOCK_STREAM;
+
+    int status = getaddrinfo(host, NULL, &filter, &result);
+    if (status)
+    {
+        puts("irclib::convert_host: Failed to convert host to IPv4.");
+        return NULL;
+    }
+
+    void *addr;
+    char *address = (char *) calloc(INET_ADDRSTRLEN, sizeof(char));
+    addr = &((struct sockaddr_in *) result->ai_addr)->sin_addr;
+    inet_ntop(result->ai_family, addr, address, INET_ADDRSTRLEN);
+
+    freeaddrinfo(result);
+    return address;
+}
 
 int establish_conn(const char *address, const int port)
 {

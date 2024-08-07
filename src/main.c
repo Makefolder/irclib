@@ -9,20 +9,25 @@
 
 #include "irclib/irc.h"
 
+// EXAMPLE IRC CLIENT
 #define NICKNAME "aegislash525"
-#define HOST "irc.freenode.net" // 149.28.246.185
-#define ADDRESS "149.28.246.185";
+#define HOST "irc.freenode.net"
 #define PORT 6667
 
 #define BUFF_CAPACITY 1024
 
 int main(void)
 {
-    const char *serv_addr = ADDRESS;
+    const char *serv_addr = convert_host(HOST);
+    if (serv_addr != NULL)
+        printf("FOUND:\n\t%s\n", serv_addr);
+    else
+        printf("NOT FOUND ANY!\n");
+
     const char *nickname = NICKNAME;
     int sockfd = establish_conn(serv_addr, PORT);
 
-    puts("");
+    printf("\n");
     char buff[BUFF_CAPACITY] = { 0 };
     recv(sockfd, buff, sizeof(buff) - 1, 0);
     printf("%s\n", buff);
@@ -41,7 +46,7 @@ int main(void)
         }
     };
 
-    while (1)
+    while (true)
     {
         char buff[BUFF_CAPACITY] = { 0 };
         poll(fd, 2, 0);
