@@ -10,7 +10,7 @@
 </div>
 
 <div align="center">
-  The IRC library... So you don't have to waste yo' time on it...
+  The IRC library… So you don't have to waste yo' time on it!
   Check on the example <br />in order to get to know how to use this library ;D
 </div>
 
