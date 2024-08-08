@@ -2,7 +2,6 @@
 
 # 📲 IRCLib
 <div align="center">
-  <img src="https://img.shields.io/badge/support%20project-contribute-green" />
   <img src="https://img.shields.io/badge/std-C99-blue" />
   <a href="https://choosealicense.com/licenses/apache-2.0/">
     <img src="https://img.shields.io/badge/license-Apache-orange" />
